@@ -1,0 +1,198 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+class Game
+{
+public:
+	Game (){};
+	Game (char newMap[][20]);
+	Game (Game &g);
+	void turnLeft ();
+	void turnRight ();
+	void turnUp ();
+	void turnDown ();
+	void display ();
+	~Game (){};
+private:
+	char map[15][20];
+};
+Game::Game (char newMap[][20])
+	{for (int i = 0; i < 15; i++)
+		{for (int j = 0; j < 20; j++)
+			map[i][j] = newMap[i][j];
+		}
+	}
+void Game::display ()
+	{for (int i = 0; i < 15; i++)
+		{for (int j = 0; j < 20; j++)
+			cout<<map[i][j];
+		cout<<endl;
+		}
+	}
+void Game::turnRight ()
+	{int i, j;
+	char map1[20][40];
+	for (i = 0; i < 15; i++)
+		{for (j = 0; j < 20; j++)
+			{if (j == 0 || i == 0 || i == 14 || j == 19)
+				map1[i][j] = '#';
+			else
+				map1[i][j] = ' '; 
+			}
+		}
+	map1[7][10]='@';
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+		{if (map[i][j] == '*')
+			{if (map[i][j + 1] == '#')
+				return;
+			if(map[i][j+1]=='@')
+				{cout<<"You made it!!!"<<endl;
+				return;}
+			map1[i][j + 1] = '*';
+			}
+		}
+	}
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+			map[i][j] = map1[i][j];
+	}
+}
+void Game::turnLeft ()
+	{int i, j;
+	char map1[15][20];
+	for (i = 0; i < 15; i++)
+		{for (j = 0; j < 20; j++)
+			{if (j == 0 || i == 0 || i == 14 || j == 19)
+				map1[i][j] = '#';
+			else
+				map1[i][j] = ' '; 
+			}
+		}
+	map1[7][10]='@';
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+		{if (map[i][j] == '*')
+			{if (map[i][j - 1] == '#')
+				return;
+			if (map[i][j - 1] == '@')
+				{cout<<"You made it!!!"<<endl;
+				return;}
+			map1[i][j - 1] = '*';
+			}
+		}
+	}
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+		map[i][j] = map1[i][j];
+	}
+}
+void Game::turnDown ()
+	{int i, j;
+	char map1[15][20];
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+		{if (j == 0 || i == 0 || i == 14 || j == 19)
+			map1[i][j] = '#';
+		else
+			map1[i][j] = ' '; 
+		}
+	}
+	map1[7][10]='@';
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+		{if (map[i][j] == '*')
+			{if (map[i + 1][j] == '#')
+				return;
+			if (map[i + 1][j] == '@')
+			{cout<<"You made it!!!"<<endl;
+				return;}
+			map1[i + 1][j] = '*';
+			}
+		}
+	}
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+			map[i][j] = map1[i][j];
+	}
+}
+void Game::turnUp ()
+{
+	int i, j;
+	char map1[15][20];
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+		{if (j == 0 || i == 0 || i == 14 || j == 19)
+				map1[i][j] = '#';
+			else
+				map1[i][j] = ' '; 
+		}
+	}
+	map1[7][10]='@';
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+		{if (map[i][j] == '*')
+			{if (map[i - 1][j] == '#')
+					return;
+				if (map[i - 1][j] == '@')
+				{cout<<"You made it!!!"<<endl;
+					return;}
+				map1[i - 1][j] = '*';
+			}
+		}
+	}
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+			map[i][j] = map1[i][j];
+	}
+}
+void main ()
+	{int i, j;
+	char map[15][20];
+	for (i = 0; i < 15; i++)
+	{for (j = 0; j < 20; j++)
+		{if (j == 0 || i == 0 || i == 14 || j == 19)
+			map[i][j] = '#';
+		else
+			map[i][j] = ' ';
+		}
+	}
+	map[1][3] = '*';
+	map[2][4] = '*';
+	map[1][5] = '*';
+	map[2][2] = '*';
+	map[2][6] = '*';
+	map[3][3] = '*';
+	map[3][5] = '*';
+	map[4][4] = '*';
+	map[7][10] = '@';
+	cout<<"Please remove this heart to '@' !!! "<<endl;
+	Game m(map);
+	m.display ();
+	while (true)
+	{char c = getch ();
+		if (c == 'w')
+			{system ("cls");
+			m.turnUp ();
+			m.display ();
+			}
+		if (c == 's')
+			{system ("cls");
+			m.turnDown ();
+			m.display ();
+			}
+		if (c == 'a')
+			{system ("cls");
+			m.turnLeft ();
+			m.display ();
+			}
+		if (c == 'd')
+			{system ("cls");
+			m.turnRight ();
+			m.display ();
+			}
+	}
+}
+
+
+
